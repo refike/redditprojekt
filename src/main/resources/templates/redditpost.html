@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <title>Reddit Application</title>
+
+</head>
+
+<body class="container">
+
+<p><a th:href="@{/post/submit}">Submit new post</a></p>
+
+<div class="text-center">
+    <h1 onclick="location.href='/post'">Trending posts</h1>
+</div>
+
+<table class="table table-striped">
+
+    <thead>
+    <tr>
+        <th>Score</th>
+        <th>Vote up</th>
+        <th>Vote down</th>
+        <th>Title</th>
+        <th>Created by:</th>
+        <th>Created</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="post : ${posts}" th:object="${post}">
+
+        <td th:text="*{score}"></td>
+        <td><a th:href="@{|/post/${post.id}/upvote|}" th:text="'+'"></a></td>
+        <td><a th:href="@{|/post/${post.id}/downvote|}" th:text="'-'"></a></td>
+        <td><a th:href="@{|/post/?content=${post.id}|}" th:text="*{title}"></a></td>
+
+        <td th:text="*{user.getName()}"></td>
+        <td th:text="*{date}"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div class="content" th:if="${content} != null">
+    <h1>Content</h1>
+    <p th:text="${content.content}"></p>
+</div>
+
+<script src="/webjar s/jquery/1.11.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
